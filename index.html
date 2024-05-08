@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animando con canvas</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = 150;
+        let angle = 0;
+
+        function draw() {
+            // Limpiar el lienzo
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Configurar el estilo de dibujo
+            context.lineWidth = 5;
+            context.strokeStyle = 'blue';
+
+            // Dibujar el arco desde 0 hasta el ángulo actual
+            context.beginPath();
+            context.arc(centerX, centerY, radius, 0, angle, false);
+            context.stroke();
+
+            // Incrementar el ángulo
+            angle += Math.PI / 60; // Ajustar la velocidad de animación
+
+            if (angle < 2 * Math.PI) {
+                // Solicitar el próximo fotograma de animación
+                requestAnimationFrame(draw);
+            } else {
+                // Si se ha completado el círculo, volver a empezar
+                angle = 0;
+                requestAnimationFrame(draw);
+            }
+        }
+
+        // Iniciar la animación
+        draw();
+    </script>
+</body>
+</html>
